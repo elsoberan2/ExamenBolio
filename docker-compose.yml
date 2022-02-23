@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+  api:
+    build:
+      context: .
+    container_name: api
+    #restart: "on-failure"
+    volumes:
+      - ./app:/app
+    ports:
+      - "80:8000"
+    command:
+      sh -c "python manage.py runserver 0.0.0.0:8000"          
+
+  dbapi:
+    image: mariadb:10.7.1
+    container_name: dbapi
+    environment:
+      - MYSQL_ROOT_PASSWORD=991121
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./db_config:/etc/mysql/conf.d
+    ports:
+      - 3334:3306
